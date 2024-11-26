@@ -12,6 +12,7 @@ const CreditDisputeGenerator = () => {
 
     const [generated_letter, set_generated_letter] = useState("");
     const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,6 +26,7 @@ const CreditDisputeGenerator = () => {
         e.preventDefault();
         setError("");
         set_generated_letter("");
+        setIsLoading(true)
 
         try {
             const response = await axios.post(
@@ -34,6 +36,9 @@ const CreditDisputeGenerator = () => {
             set_generated_letter(response.data.letter);
         } catch (error) {
             setError("Error generating letter, please try again");
+        }
+        finally{
+            setIsLoading(false)
         }
     };
 
@@ -87,6 +92,13 @@ const CreditDisputeGenerator = () => {
                     Generate Letter
                 </button>
             </form>
+
+            {isLoading && (
+                <div className="loading-container">
+                    <div className="spinner"></div>
+                    <p>Generating your letter...</p>
+                </div>
+            )}
 
             {error && <p className="error-message">{error}</p>}
 

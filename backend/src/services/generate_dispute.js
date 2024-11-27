@@ -5,11 +5,10 @@ dotenv.config();
 
 // Initialize the OpenAI instance
 const openaiInstance = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // Ensure this is set in your .env file
+  apiKey: process.env.OPENAI_API_KEY, 
 });
 
 /**
- * Generate a professional credit dispute letter using GPT-4
  * @param {Object} userData - Contains user information for the dispute letter
  * @param {string} userData.name - The user's name
  * @param {string} userData.address - The user's address
@@ -38,7 +37,7 @@ async function generate_dispute_letter(userData) {
 
   try {
     const response = await openaiInstance.chat.completions.create({
-      model: "gpt-3.5-turbo", // Use "gpt-4-turbo" if you want a cheaper/faster alternative
+      model: "gpt-3.5-turbo", // Use "gpt-3.5-turbo" if you want a cheaper/faster alternative
       messages: messages,
       max_tokens: 400, // Limit the response length
     });

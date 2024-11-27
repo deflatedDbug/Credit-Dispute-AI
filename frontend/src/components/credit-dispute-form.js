@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "../cdg.css"; // Add a CSS file for styles
+import "../App.css"; // Add a CSS file for styles
 import { jsPDF } from "jspdf"
 
 const CreditDisputeGenerator = () => {

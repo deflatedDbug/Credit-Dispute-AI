@@ -10,14 +10,17 @@ function BackgroundManager() {
   const location = useLocation();
 
   useEffect(() => {
-    const isAuthPage = location.pathname === "/auth";
-    document.body.className = isAuthPage ? "auth-bg" : "main-bg"
+    const isAuthPage = location.pathname === "/sign-in";
+    const newClassName = isAuthPage ? "auth-bg" : "main-bg"
+    if (document.body.className !== newClassName) {
+      document.body.className = newClassName
+    }
   }, [location])
-
   return null;
 }
 
 function App() {
+  
   const [isAuthenticated, setIsAuthenticated] = useState(
     () => localStorage.getItem("isAuthenticated") === "true"
   );
@@ -29,11 +32,14 @@ function App() {
   return (
     <Router>
       <BackgroundManager />
-        <Nav />
+        <Nav 
+          isAuthenticated={isAuthenticated}
+          onLoginSuccess={() => setIsAuthenticated(true)}
+        />
         <Routes>
           {/* Authentication Route */}
           <Route
-            path="/auth"
+            path="/sign-in"
             element={
               isAuthenticated ? (
                 <Navigate to="/" />
@@ -42,7 +48,6 @@ function App() {
               )
             }
           />
-
           {/* Protected Route */}
           <Route
             path="/"
@@ -50,7 +55,7 @@ function App() {
               isAuthenticated ? (
                 <CreditDisputeGenerator />
               ) : (
-                <Navigate to="/auth" />
+                <Navigate to="/sign-in" />
               )
             }
           />

@@ -37,7 +37,7 @@ async function generate_dispute_letter(userData) {
 
   try {
     const response = await openaiInstance.chat.completions.create({
-      model: "gpt-3.5-turbo", // Use "gpt-3.5-turbo" if you want a cheaper/faster alternative
+      model: "gpt-4o", // Use "gpt-3.5-turbo" if you want a cheaper/faster alternative
       messages: messages,
       max_tokens: 400, // Limit the response length
     });

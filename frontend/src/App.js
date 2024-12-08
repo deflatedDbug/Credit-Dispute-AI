@@ -2,39 +2,31 @@ import './App.css';
 import './index.css';
 import CreditDisputeGenerator from './components/credit-dispute-form';
 import { Auth } from "./components/Auth";
-import { Nav } from './components/Nav'
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-
-function BackgroundManager() {
-  const location = useLocation();
-
-  useEffect(() => {
-    const isAuthPage = location.pathname === "/sign-in";
-    const newClassName = isAuthPage ? "auth-bg" : "main-bg"
-    if (document.body.className !== newClassName) {
-      document.body.className = newClassName
-    }
-  }, [location])
-  return null;
-}
+import {Nav} from './components/Nav'
+import { BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
+import { useState} from "react";
 
 function App() {
   
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    () => localStorage.getItem("isAuthenticated") === "true"
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem("isAuthenticated") === "true";
+  });
 
-  useEffect(() => {
-    localStorage.setItem("isAuthenticated", isAuthenticated);
-  }, [isAuthenticated]);
+  // const navigate = useNavigate();
 
+  const handleLoginSuccess = (authState) => {
+    setIsAuthenticated(authState);
+    if (authState) {
+      localStorage.setItem("isAuthenticated", true);
+    } else {
+      localStorage.removeItem("isAuthenticated");
+    }
+  };
   return (
-    <Router>
-      <BackgroundManager />
+    <>
         <Nav 
           isAuthenticated={isAuthenticated}
-          onLoginSuccess={() => setIsAuthenticated(true)}
+          onLoginSuccess={() => setIsAuthenticated(handleLoginSuccess)}
         />
         <Routes>
           {/* Authentication Route */}
@@ -60,7 +52,7 @@ function App() {
             }
           />
         </Routes>
-    </Router>
+    </>
   );
 }
 

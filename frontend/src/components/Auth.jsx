@@ -3,9 +3,10 @@ import { useGoogleLogin } from "@react-oauth/google";
 
 export function Auth({onLoginSuccess}) {
   const login = useGoogleLogin({
-    onSuccess: (credentialResponse) => {
+  onSuccess: async ({code}) => {
       try {
         onLoginSuccess();
+        console.log(login.fetchBasicProfile())
       }catch (error) {
         console.error("Failed to decode token", error);
       }

@@ -55,7 +55,7 @@ const CreditDisputeGenerator = () => {
 
     return (
         <div className="credit-dispute-container">
-            <h1 className="title">DisputeAI</h1>
+            <h1 className="title">Credit Dispute Form </h1>
             <form className="form" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Name:</label>
